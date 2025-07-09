@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SignBridge | Dictionary</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="dictionary.css">
+</head>
+<body>
+    <div class="sidebar">
+        <div class="top">
+            <div class="logo">
+                <i class="bx bxl-codepen"></i>
+                <span>Sign Bridge</span>
+            </div>
+            <i class="bx bx-menu" id="btn"></i>
+        </div>
+        <div class="user">
+            <img src="https://cdn-icons-png.flaticon.com/512/2206/2206368.png" alt="admin" class="admin-jpg">
+            <div>
+                <p class="bold">Anhsirk</p>
+                <p>User</p>
+            </div>
+        </div>
+        <ul>
+            <li>
+                <a href="http://localhost:8000/#">
+                    <i class="bx bxs-grid-alt"></i>
+                    <span class="nav-item">Dashboard</span>
+                </a>
+                <span class="tooltip">Dashboard</span>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="bx bx-home"></i>
+                    <span class="nav-item">Home</span>
+                </a>
+                <span class="tooltip">Home</span>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="bx bxs-user-detail"></i>
+                    <span class="nav-item">Users</span>
+                </a>
+                <span class="tooltip">Users</span>
+            </li>
+            <li>
+                <a href="#" class="active">
+                    <i class="bx bx-file"></i>
+                    <span class="nav-item">Dictionary</span>
+                </a>
+                <span class="tooltip">Dictionary</span>
+            </li>
+            <li>
+                <a href="community.html">
+                    <i class="bx bx-group"></i>
+                    <span class="nav-item">Community</span>
+                </a>
+                <span class="tooltip">Community</span>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="bx bx-cog"></i>
+                    <span class="nav-item">Settings</span>
+                </a>
+                <span class="tooltip">Settings</span>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="bx bx-log-out"></i>
+                    <span class="nav-item">Logout</span>
+                </a>
+                <span class="tooltip">Logout</span>
+            </li>
+        </ul>
+    </div>
+
+    <div class="main-content">
+        <div class="container">
+            <div class="header-section">
+                <h1>Sign Language Dictionary</h1>
+                <p>Master the Art of Visual Communication</p>
+            </div>
+
+            <div class="search-section">
+                <div class="search-bar">
+                    <input type="text" placeholder="Search for letters, words, or signs...">
+                    <i class="bx bx-search"></i>
+                </div>
+            </div>
+
+            <div class="asl-content">
+                <div class="asl-gif-section">
+                    <h2>Sign Language Alphabet</h2>
+                    <div class="gif-container">
+                        <img src="https://www.deafblind.com/asl.gif" alt="The Sign Language Alphabet" />
+                    </div>
+                    <p style="margin-top: 1rem; color: #718096; font-style: italic; font-size: 0.9rem;">Interactive Sign Language Guide</p>
+                </div>
+
+                <div class="alphabet-info">
+                    <h2>Letter Descriptions</h2>
+                    <button class="auto-play-btn" id="autoPlayBtn" title="Toggle Auto-play">
+                        <i class="bx bx-play"></i>
+                    </button>
+                    
+                    <div class="slideshow-container">
+                        <div class="slide active">
+                            <h3>A</h3>
+                            <p>A closed fist, all fingers folded against the palm, thumb is straight, alongside the index finger.</p>
+                        </div>
+                        <div class="slide">
+                            <h3>B</h3>
+                            <p>All fingers are straight and together. Thumb is folded across palm.</p>
+                        </div>
+                        <div class="slide">
+                            <h3>C</h3>
+                            <p>Hand forms a curved shape like the letter C, with fingers curved and thumb opposing.</p>
+                        </div>
+                        <div class="slide">
+                            <h3>D</h3>
+                            <p>Index finger points up, middle finger touches thumb, other fingers folded down.</p>
+                        </div>
+                        <div class="slide">
+                            <h3>E</h3>
+                            <p>All fingers are bent and touching the thumb, forming a tight fist.</p>
+                        </div>
+                        <div class="slide">
+                            <h3>F</h3>
+                            <p>Index finger and thumb touch in a circle, other three fingers are straight up.</p>
+                        </div>
+                        <div class="slide">
+                            <h3>G</h3>
+                            <p>Index finger and thumb point horizontally, other fingers folded down.</p>
+                        </div>
+                        <div class="slide">
+                            <h3>H</h3>
+                            <p>Index and middle fingers point horizontally, other fingers folded down.</p>
+                        </div>
+                        <div class="slide">
+                            <h3>I</h3>
+                            <p>Pinky finger points up, other fingers folded with thumb across them.</p>
+                        </div>
+                        <div class="slide">
+                            <h3>J</h3>
+                            <p>Same as 'I' but with a hooking motion downward.</p>
+                        </div>
+                        <div class="slide">
+                            <h3>K</h3>
+                            <p>Index and middle fingers form a V, thumb touches middle finger.</p>
+                        </div>
+                        <div class="slide">
+                            <h3>L</h3>
+                            <p>Index finger up, thumb out horizontally, forming an L shape.</p>
+                        </div>
+                        <div class="slide">
+                            <h3>M</h3>
+                            <p>Three fingers draped over the thumb, pinky folded down.</p>
+                        </div>
+                        <div class="slide">
+                            <h3>N</h3>
+                            <p>Two fingers draped over the thumb, other fingers folded down.</p>
+                        </div>
+                        <div class="slide">
+                            <h3>O</h3>
+                            <p>All fingers touch the thumb, forming a circle or oval shape.</p>
+                        </div>
+                        <div class="slide">
+                            <h3>P</h3>
+                            <p>Similar to K, but pointing downward.</p>
+                        </div>
+                        <div class="slide">
+                            <h3>Q</h3>
+                            <p>Index finger and thumb point down, other fingers folded.</p>
+                        </div>
+                        <div class="slide">
+                            <h3>R</h3>
+                            <p>Index and middle fingers crossed, other fingers folded.</p>
+                        </div>
+                        <div class="slide">
+                            <h3>S</h3>
+                            <p>Fist with thumb across the fingers, similar to A but thumb in front.</p>
+                        </div>
+                        <div class="slide">
+                            <h3>T</h3>
+                            <p>Thumb between index and middle finger, forming a fist.</p>
+                        </div>
+                        <div class="slide">
+                            <h3>U</h3>
+                            <p>Index and middle fingers together, pointing up.</p>
+                        </div>
+                        <div class="slide">
+                            <h3>V</h3>
+                            <p>Index and middle fingers apart, forming a V shape.</p>
+                        </div>
+                        <div class="slide">
+                            <h3>W</h3>
+                            <p>Index, middle, and ring fingers up and apart.</p>
+                        </div>
+                        <div class="slide">
+                            <h3>X</h3>
+                            <p>Index finger bent in a hook shape, other fingers folded.</p>
+                        </div>
+                        <div class="slide">
+                            <h3>Y</h3>
+                            <p>Thumb and pinky extended, other fingers folded.</p>
+                        </div>
+                        <div class="slide">
+                            <h3>Z</h3>
+                            <p>Index finger traces the letter Z in the air.</p>
+                        </div>
+                    </div>
+
+                    <div class="slide-controls">
+                        <button class="slide-btn" id="prevBtn">
+                            <div class="arrow-left"></div>
+                        </button>
+                        
+                        <div class="slide-indicator">
+                            <div class="slide-counter">
+                                <span id="currentSlide">1</span> / <span id="totalSlides">26</span>
+                            </div>
+                        </div>
+                        
+                        <button class="slide-btn" id="nextBtn">
+                            <div class="arrow-right"></div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let btn = document.querySelector('#btn');
+        let sidebar = document.querySelector('.sidebar');
+        let searchInput = document.querySelector('.search-bar input');
+        
+        // Slideshow functionality
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+        let currentSlideIndex = 0;
+        let autoPlayInterval;
+        let isAutoPlaying = false;
+
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const autoPlayBtn = document.getElementById('autoPlayBtn');
+        const currentSlideSpan = document.getElementById('currentSlide');
+        const totalSlidesSpan = document.getElementById('totalSlides');
+
+        // Initialize
+        totalSlidesSpan.textContent = totalSlides;
+        updateSlideDisplay();
+        
+        // Start automatic slideshow immediately
+        startAutoPlay();
+
+        btn.onclick = function() {
+            sidebar.classList.toggle('active');
+        };
+
+        // Slideshow functions
+        function showSlide(index) {
+            slides.forEach((slide, i) => {
+                slide.classList.toggle('active', i === index);
+            });
+            currentSlideSpan.textContent = index + 1;
+            updateNavigationButtons();
+        }
+
+        function updateSlideDisplay() {
+            showSlide(currentSlideIndex);
+        }
+
+        function updateNavigationButtons() {
+            prevBtn.disabled = currentSlideIndex === 0;
+            nextBtn.disabled = currentSlideIndex === totalSlides - 1;
+        }
+
+        function nextSlide() {
+            if (currentSlideIndex < totalSlides - 1) {
+                currentSlideIndex++;
+                updateSlideDisplay();
+            } else if (isAutoPlaying) {
+                currentSlideIndex = 0;
+                updateSlideDisplay();
+            }
+        }
+
+        function prevSlide() {
+            if (currentSlideIndex > 0) {
+                currentSlideIndex--;
+                updateSlideDisplay();
+            }
+        }
+
+        function startAutoPlay() {
+            isAutoPlaying = true;
+            autoPlayBtn.classList.add('playing');
+            autoPlayBtn.innerHTML = '<i class="bx bx-pause"></i>';
+            autoPlayInterval = setInterval(nextSlide, 2500); // Faster transition - 2.5 seconds
+        }
+
+        function stopAutoPlay() {
+            isAutoPlaying = false;
+            autoPlayBtn.classList.remove('playing');
+            autoPlayBtn.innerHTML = '<i class="bx bx-play"></i>';
+            clearInterval(autoPlayInterval);
+        }
+
+        function toggleAutoPlay() {
+            if (isAutoPlaying) {
+                stopAutoPlay();
+            } else {
+                startAutoPlay();
+            }
+        }
+
+        // Event listeners
+        nextBtn.addEventListener('click', nextSlide);
+        prevBtn.addEventListener('click', prevSlide);
+        autoPlayBtn.addEventListener('click', toggleAutoPlay);
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowLeft') {
+                prevSlide();
+            } else if (e.key === 'ArrowRight') {
+                nextSlide();
+            } else if (e.key === ' ') {
+                e.preventDefault();
+                toggleAutoPlay();
+            }
+        });
+
+        // Search functionality
+        searchInput.addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase();
+            
+            if (searchTerm === '') {
+                return;
+            }
+
+            // Find matching slide
+            const matchingSlideIndex = Array.from(slides).findIndex(slide => {
+                const letter = slide.querySelector('h3').textContent.toLowerCase();
+                const description = slide.querySelector('p').textContent.toLowerCase();
+                return letter.includes(searchTerm) || description.includes(searchTerm);
+            });
+
+            if (matchingSlideIndex !== -1) {
+                currentSlideIndex = matchingSlideIndex;
+                updateSlideDisplay();
+                stopAutoPlay(); // Stop auto-play when user searches
+            }
+        });
+    </script>
+</body>
+</html>

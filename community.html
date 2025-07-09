@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SignBridge | Community</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .admin-jpg {
+        width: 50px;
+        border-radius: 100%;
+        border: 1px solid #eee;
+    }
+
+    .sidebar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 80px;
+    background-color: #12171e;
+    padding: 0.4rem 0.8rem;
+    transition: all 0.5s ease;
+}
+
+    .sidebar.active ~ .main-content {
+        left: 250px;
+        width: calc(100% - 250px);
+    }
+
+    .sidebar.active {
+        width: 250px;
+    }
+
+    .sidebar #btn {
+        position: absolute;
+        color: #fff;
+        top: .4rem;
+        left: 50%;
+        font-size: 1.2rem;
+        line-height: 50px;
+        transform: translateX(-50%);
+        cursor: pointer;
+    }
+
+    .sidebar.active #btn {
+        left: 90%;
+    }
+
+    .sidebar .top .logo {
+        color: #fff;
+        display: flex;
+        height: 50px;
+        width: 100%;
+        align-items: center;
+        pointer-events: none;
+        opacity: 0;
+    }
+
+    .sidebar.active .top .logo {
+        opacity: 1;
+    }
+
+    .top .logo i {
+        font-size: 2rem;
+        margin-right: 5px;
+    }
+
+    .user {
+        display: flex;
+        align-items: center;
+        margin: 1rem 0;
+    }
+
+    .user p {
+        color: #fff;
+        opacity: 1;
+        margin-left: 1rem;
+    }
+
+    .bold {
+        font-weight: 600;
+    }
+
+    .sidebar p {
+        opacity: 0;
+    }
+
+    .sidebar.active p {
+        opacity: 1;
+    }
+
+    .sidebar ul li {
+        position: relative;
+        list-style-type: none;
+        height: 50px;
+        width: 90%;
+        margin: 0.8rem auto;
+        line-height: 50px;
+    }
+
+    .sidebar ul li a {
+        color: #fff;
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+        border-radius: 0.8rem;
+    }
+
+    .sidebar ul li a:hover {
+        background-color: #fff;
+        color: #12171e;
+    }
+
+    .sidebar ul li a.active {
+        background-color: #fff;
+        color: #12171e;
+    }
+
+    .sidebar ul li a i {
+        min-width: 50px;
+        text-align: center;
+        height: 50px;
+        border-radius: 12px;
+        line-height: 50px;
+    }
+
+    .sidebar .nav-item {
+        opacity: 0;
+    }
+
+    .sidebar.active .nav-item {
+        opacity: 1;
+    }
+
+    .sidebar ul li .tooltip {
+        position: absolute;
+        left: 125px;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        box-shadow: 0 0.5rem 0.8rem rgba(0, 0, 0, 0.1);
+        border-radius: .6rem;
+        padding: .4rem 1.2rem;
+        line-height: 1.8rem;
+        z-index: 20;
+        opacity: 0;
+        background: #fff;
+        color: #12171e;
+    }
+
+    .sidebar ul li:hover .tooltip {
+        opacity: 1;
+    }
+
+    .sidebar.active ul li .tooltip {
+        display: none;
+    }
+
+    .main-content {
+        position: relative;
+        background-color: #f0f8ff;
+        height: 100vh;
+        top: 0;
+        left: 80px;
+        transition: all 0.5s ease;
+        width: calc(100% - 80px);
+        padding: 1rem;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        padding: 0 20px;
+        margin-bottom: 1rem;
+        flex-shrink: 0;
+    }
+
+    .header-section h1 {
+        margin: 0;
+        color: #12171e;
+        font-size: 2.5rem;
+        font-weight: 700;
+    }
+
+    .search-bar {
+        display: flex;
+        align-items: center;
+        flex-grow: 1;
+        margin: 0 20px;
+    }
+
+    .search-bar input {
+        padding: 12px;
+        border: 2px solid #12171e;
+        border-radius: 25px;
+        width: 100%;
+        max-width: 500px;
+        margin-right: 10px;
+        font-size: 1rem;
+        outline: none;
+        transition: all 0.3s ease;
+    }
+
+    .search-bar input:focus {
+        border-color: #4a90e2;
+        box-shadow: 0 0 10px rgba(74, 144, 226, 0.3);
+    }
+
+    .search-bar i {
+        font-size: 1.2rem;
+        color: #555;
+        cursor: pointer;
+        padding: 8px;
+        border-radius: 50%;
+        transition: all 0.3s ease;
+    }
+
+    .search-bar i:hover {
+        background-color: #12171e;
+        color: #fff;
+    }
+
+    .community-layout {
+        display: grid;
+        grid-template-columns: 1fr 350px;
+        gap: 2rem;
+        max-width: 1600px;
+        margin: 0 auto;
+        height: calc(100vh - 120px);
+        overflow: hidden;
+        flex: 1;
+    }
+
+    .community-main {
+        background: #fff;
+        border-radius: 15px;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        width: 900px;
+    }
+
+    .create-post {
+        padding: 1.2rem;
+        border-bottom: 2px solid #e6f3ff;
+        background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%);
+        color: white;
+        position: relative;
+        overflow: hidden;
+        flex-shrink: 0;
+    }
+
+    .create-post::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+        transform: rotate(45deg);
+        animation: shine 3s infinite;
+    }
+
+    @keyframes shine {
+        0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+        50% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        100% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+    }
+
+    .create-post h3 {
+        margin-bottom: 0.8rem;
+        font-size: 1.2rem;
+    }
+
+    .post-form {
+        display: flex;
+        flex-direction: column;
+        gap: 0.8rem;
+    }
+
+    .post-input {
+        padding: 10px;
+        border: none;
+        border-radius: 8px;
+        font-size: 1rem;
+        resize: vertical;
+        outline: none;
+    }
+
+    .post-actions {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .post-btn {
+        background: #fff;
+        color: #4a90e2;
+        border: none;
+        padding: 8px 16px;
+        border-radius: 20px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        position: relative;
+        z-index: 1;
+    }
+
+    .post-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(74, 144, 226, 0.3);
+        background: #e6f3ff;
+    }
+
+    .post-options {
+        display: flex;
+        gap: 0.8rem;
+    }
+
+    .post-option {
+        color: white;
+        font-size: 1.1rem;
+        cursor: pointer;
+        padding: 6px;
+        border-radius: 50%;
+        transition: all 0.3s ease;
+        position: relative;
+        z-index: 1;
+    }
+
+    .post-option:hover {
+        background: rgba(255, 255, 255, 0.2);
+        transform: scale(1.1) rotate(5deg);
+    }
+
+    .posts-feed {
+        flex: 1;
+        overflow-y: auto;
+        padding: 0;
+    }
+
+    .posts-feed::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    .posts-feed::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 10px;
+    }
+
+    .posts-feed::-webkit-scrollbar-thumb {
+        background: #4a90e2;
+        border-radius: 10px;
+    }
+
+    .posts-feed::-webkit-scrollbar-thumb:hover {
+        background: #357abd;
+    }
+
+    .post {
+        padding: 1.2rem;
+        border-bottom: 1px solid #f0f0f0;
+        transition: all 0.3s ease;
+    }
+
+    .post:hover {
+        background: #f9f9f9;
+    }
+
+    .post-header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 0.8rem;
+    }
+
+    .post-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        margin-right: 0.8rem;
+        object-fit: cover;
+    }
+
+    .post-info h4 {
+        color: #12171e;
+        font-size: 1rem;
+        margin-bottom: 0.2rem;
+    }
+
+    .post-meta {
+        color: #666;
+        font-size: 0.85rem;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .post-content {
+        margin-bottom: 0.8rem;
+        line-height: 1.5;
+        color: #333;
+    }
+
+    .post-image {
+        width: 100%;
+        max-height: 250px;
+        object-fit: cover;
+        border-radius: 10px;
+        margin: 0.8rem 0;
+    }
+
+    .post-actions-bar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-top: 0.8rem;
+        border-top: 1px solid #f0f0f0;
+    }
+
+    .post-stats {
+        display: flex;
+        gap: 1.5rem;
+        color: #666;
+        font-size: 0.85rem;
+    }
+
+    .post-interactions {
+        display: flex;
+        gap: 0.8rem;
+    }
+
+    .interaction-btn {
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+        background: none;
+        border: none;
+        color: #666;
+        cursor: pointer;
+        padding: 6px 10px;
+        border-radius: 18px;
+        transition: all 0.3s ease;
+        font-size: 0.85rem;
+    }
+
+    .interaction-btn:hover {
+        background: #f0f0f0;
+        color: #12171e;
+    }
+
+    .interaction-btn.liked {
+        color: #4a90e2;
+        background: rgba(74, 144, 226, 0.1);
+    }
+
+    .community-sidebar {
+        height: 100%;
+        overflow-y: auto;
+        padding-right: 10px;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        width: 360px;
+    }
+
+    .sidebar-widget {
+        background: #fff;
+        border-radius: 15px;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        flex-shrink: 0;
+    }
+
+    .widget-header {
+        background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%);
+        color: white;
+        padding: 0.8rem;
+        font-weight: 600;
+        font-size: 1rem;
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+    }
+
+    .stats-icon {
+        font-size: 1.2rem;
+        margin-right: 0.4rem;
+        animation: pulse-icon 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse-icon {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.1); }
+    }
+
+    .widget-content {
+        padding: 0.8rem;
+    }
+
+    .trending-topic {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.6rem 0;
+        border-bottom: 1px solid #f0f0f0;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .trending-topic:last-child {
+        border-bottom: none;
+    }
+
+    .trending-topic:hover {
+        background: #f9f9f9;
+        margin: 0 -0.8rem;
+        padding-left: 0.8rem;
+        padding-right: 0.8rem;
+    }
+
+    .topic-info h5 {
+        color: #12171e;
+        margin-bottom: 0.2rem;
+        font-size: 0.9rem;
+    }
+
+    .topic-meta {
+        color: #666;
+        font-size: 0.75rem;
+    }
+
+    .topic-count {
+        background: #4a90e2;
+        color: white;
+        padding: 3px 6px;
+        border-radius: 10px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        animation: pulse-count 3s ease-in-out infinite;
+    }
+
+    @keyframes pulse-count {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+    }
+
+    .suggested-user {
+        display: flex;
+        align-items: center;
+        padding: 0.6rem 0;
+        border-bottom: 1px solid #f0f0f0;
+    }
+
+    .suggested-user:last-child {
+        border-bottom: none;
+    }
+
+    .suggested-avatar {
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        margin-right: 0.8rem;
+        object-fit: cover;
+    }
+
+    .suggested-info {
+        flex: 1;
+    }
+
+    .suggested-info h5 {
+        color: #12171e;
+        margin-bottom: 0.2rem;
+        font-size: 0.9rem;
+    }
+
+    .suggested-info p {
+        color: #666;
+        font-size: 0.75rem;
+    }
+
+    .follow-btn {
+        background: #4a90e2;
+        color: white;
+        border: none;
+        padding: 5px 10px;
+        border-radius: 12px;
+        cursor: pointer;
+        font-size: 0.75rem;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .follow-btn:hover {
+        background: #357abd;
+        transform: translateY(-1px);
+    }
+
+    .follow-btn:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+        transition: left 0.5s;
+    }
+
+    .follow-btn:hover:before {
+        left: 100%;
+    }
+
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.6rem;
+    }
+
+    .stat-item {
+        text-align: center;
+        padding: 0.6rem;
+        background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%);
+        color: white;
+        border-radius: 8px;
+        position: relative;
+        overflow: hidden;
+        animation: float 6s ease-in-out infinite;
+    }
+
+    .stat-item:nth-child(2) {
+        animation-delay: -2s;
+    }
+
+    .stat-item:nth-child(3) {
+        animation-delay: -4s;
+    }
+
+    .stat-item:nth-child(4) {
+        animation-delay: -6s;
+    }
+
+    @keyframes float {
+        0%, 100% { transform: translateY(0px); }
+        50% { transform: translateY(-3px); }
+    }
+
+    .stat-item::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.8), transparent);
+        animation: scan 2s linear infinite;
+    }
+
+    @keyframes scan {
+        0% { transform: translateX(-100%); }
+        100% { transform: translateX(100%); }
+    }
+
+    .stat-number {
+        font-size: 1.1rem;
+        font-weight: 700;
+        margin-bottom: 0.2rem;
+    }
+
+    .stat-label {
+        font-size: 0.75rem;
+        opacity: 0.9;
+    }
+
+    .empty-state {
+        margin-top: 30px;
+        text-align: center;
+        padding: 2rem 1.5rem;
+        color: #666;
+    }
+
+    .empty-state i {
+        font-size: 4rem;
+        color: #4a90e2;
+        margin-bottom: 0.8rem;
+        display: block;
+    }
+
+    .empty-state h3 {
+        margin-bottom: 0.8rem;
+        color: #12171e;
+        font-size: 1.5rem;
+    }
+
+    .empty-state p {
+        max-width: 400px;
+        margin: 0 auto;
+        line-height: 1.5;
+    }
+
+    @media (max-width: 768px) {
+        .community-layout {
+            grid-template-columns: 1fr;
+            gap: 1rem;
+        }
+        
+        .container {
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .search-bar {
+            width: 100%;
+            margin: 0;
+        }
+        
+        .main-content {
+            left: 0;
+            width: 100%;
+        }
+        
+        .sidebar {
+            display: none;
+        }
+    }
+
+    .live-indicator {
+        display: inline-block;
+        width: 8px;
+        height: 8px;
+        background: #00ff88;
+        border-radius: 50%;
+        margin-right: 0.5rem;
+        animation: pulse 2s infinite;
+        box-shadow: 0 0 5px #00ff88;
+    }
+
+    @keyframes pulse {
+        0% {
+            box-shadow: 0 0 0 0 rgba(0, 255, 136, 0.7);
+        }
+        70% {
+            box-shadow: 0 0 0 10px rgba(0, 255, 136, 0);
+        }
+        100% {
+            box-shadow: 0 0 0 0 rgba(0, 255, 136, 0);
+        }
+    }
+</style>
+<body>
+    <div class="sidebar">
+        <div class="top">
+            <div class="logo">
+                <i class="bx bxl-codepen"></i>
+                <span>Sign Bridge</span>
+            </div>
+            <i class="bx bx-menu" id="btn"></i>
+        </div>
+        <div class="user">
+            <img src="https://cdn-icons-png.flaticon.com/512/2206/2206368.png" alt="admin" class="admin-jpg">
+            <div>
+                <p class="bold">Anhsirk</p>
+                <p>User</p>
+            </div>
+        </div>
+        <ul>
+            <li>
+                <a href="http://localhost:8000/#">
+                    <i class="bx bxs-grid-alt"></i>
+                    <span class="nav-item">Dashboard</span>
+                </a>
+                <span class="tooltip">Dashboard</span>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="bx bx-home"></i>
+                    <span class="nav-item">Home</span>
+                </a>
+                <span class="tooltip">Home</span>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="bx bxs-user-detail"></i>
+                    <span class="nav-item">Users</span>
+                </a>
+                <span class="tooltip">Users</span>
+            </li>
+            <li>
+                <a href="dictionary.html">
+                    <i class="bx bx-file"></i>
+                    <span class="nav-item">Dictionary</span>
+                </a>
+                <span class="tooltip">Dictionary</span>
+            </li>
+            <li>
+                <a href="#" class="active">
+                    <i class="bx bx-group"></i>
+                    <span class="nav-item">Community</span>
+                </a>
+                <span class="tooltip">Community</span>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="bx bx-cog"></i>
+                    <span class="nav-item">Settings</span>
+                </a>
+                <span class="tooltip">Settings</span>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="bx bx-log-out"></i>
+                    <span class="nav-item">Logout</span>
+                </a>
+                <span class="tooltip">Logout</span>
+            </li>
+        </ul>
+    </div>
+
+    <div class="main-content">
+        <div class="container">
+            <div class="header-section">
+                <h1>Community</h1>
+            </div>
+            <div class="search-bar">
+                <input type="text" placeholder="Search posts, topics, or users..." id="searchInput">
+                <i class="bx bx-search" onclick="searchCommunity()"></i>
+            </div>      
+        </div>
+
+        <div class="community-layout">
+            <div class="community-main">
+                <div class="create-post">
+                    <h3>Share with the Community</h3>
+                    <div class="post-form">
+                        <textarea class="post-input" placeholder="What's on your mind? Share a sign language tip, ask a question, or start a discussion..." rows="2" id="postContent"></textarea>
+                        <div class="post-actions">
+                            <div class="post-options">
+                                <i class="bx bx-image post-option" title="Add Image" onclick="addImage()"></i>
+                                <i class="bx bx-video post-option" title="Add Video" onclick="addVideo()"></i>
+                                <i class="bx bx-poll post-option" title="Create Poll" onclick="createPoll()"></i>
+                                <i class="bx bx-hash post-option" title="Add Topic" onclick="addTopic()"></i>
+                            </div>
+                            <button class="post-btn" onclick="createPost()">Share Post</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="posts-feed" id="postsFeed">
+                    <div class="empty-state">
+                        <i class="bx bx-message-square-dots"></i>
+                        <h3>Welcome to the Community!</h3>
+                        <p>Start sharing your thoughts, ask questions, or connect with other sign language learners. Your first post could inspire someone's learning journey!</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="community-sidebar">
+                <div class="sidebar-widget">
+                    <div class="widget-header">
+                        <i class="bx bx-bar-chart-alt-2 stats-icon"></i>
+                        <span class="live-indicator"></span>
+                        Community Stats
+                    </div>
+                    <div class="widget-content">
+                        <div class="stats-grid">
+                            <div class="stat-item">
+                                <div class="stat-number">2.4K</div>
+                                <div class="stat-label">Active Users</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number">156</div>
+                                <div class="stat-label">Posts Today</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number">89</div>
+                                <div class="stat-label">Online Now</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number">1.2K</div>
+                                <div class="stat-label">This Week</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sidebar-widget">
+                    <div class="widget-header">
+                        <i class="bx bx-trending-up" style="margin-right: 0.5rem;"></i>
+                        Trending Topics
+                    </div>
+                    <div class="widget-content">
+                        <div class="trending-topic" onclick="filterByTopic('asl-basics')">
+                            <div class="topic-info">
+                                <h5>#ISLBasics</h5>
+                                <div class="topic-meta">Beginner friendly signs</div>
+                            </div>
+                            <div class="topic-count">47</div>
+                        </div>
+                        <div class="trending-topic" onclick="filterByTopic('learning-tips')">
+                            <div class="topic-info">
+                                <h5>#LearningTips</h5>
+                                <div class="topic-meta">Study techniques</div>
+                            </div>
+                            <div class="topic-count">31</div>
+                        </div>
+                    </div>
+                </div>
+
+              <div class="sidebar-widget">
+                    <div class="widget-header">
+                        <i class="bx bx-user-plus" style="margin-right: 0.5rem;"></i>
+                        Suggested Connections
+                    </div>
+                    <div class="widget-content">
+                        <div class="suggested-user">
+                            <img src="data:image/png;base64,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" alt="User" class="suggested-avatar">
+                            <div class="suggested-info">
+                                <h5>Sarah Johnson</h5>
+                                <p>ISL Instructor • 5 mutual connections</p>
+                            </div>
+                            <button class="follow-btn" onclick="followUser(this)">Follow</button>
+                        </div>
+                        <div class="suggested-user">
+                            <img src="data:image/png;base64,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" alt="User" class="suggested-avatar">
+                            <div class="suggested-info">
+                                <h5>Mike Chen</h5>
+                                <p>Deaf Advocate • 12 mutual connections</p>
+                            </div>
+                            <button class="follow-btn" onclick="followUser(this)">Follow</button>
+                        </div>
+</body>
+<script>
+    let btn = document.querySelector('#btn');
+    let sidebar = document.querySelector('.sidebar');
+
+    btn.onclick = function() {
+        sidebar.classList.toggle('active');
+    };
+</script>
+</html>
